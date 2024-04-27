@@ -12,6 +12,8 @@ chat_members = []
 
 SERVER_ID = 0
 
+pc = packet_creator()
+
 
 #classes:
 """defines a chat_member and holds data for use"""
@@ -23,6 +25,8 @@ class chat_member:
         self.name = None
     def set_name(self,name):
         self.name = name
+    def get_id(self):
+        return self.id
 
 #functions
 
@@ -53,14 +57,16 @@ def route_message(packet):
     sender_id = split_packet[1]
     if packet_type == "client-name":
         name = split_packet[3]
-        member = get_member_by_id(sender_id)
-        member.set_name(name)
+        #print(name)
+        chat_member = get_member_by_id(sender_id)
+        chat_member.set_name(name)
+        print(chat_member.name)
 
 """get the chat member by ID"""
 def get_member_by_id(id):
-    for member in chat_members:
-        if member.id == id:
-            return member
+    for chat_member in chat_members:
+        if chat_member.id == int(id):
+            return chat_member
 
 
 
@@ -87,7 +93,7 @@ def main():
 
 
             #requests the client's name
-            name_request = packet_creator.create_server_name_retrieval(SERVER_ID,client_id)
+            name_request = pc.create_server_name_retrieval(SERVER_ID,client_id)
             client_socket.send(name_request)
 
             #iterates the id

@@ -7,6 +7,8 @@ from packet_creator import packet_creator
 SERVER_ADDRESS = '127.0.0.1'
 SERVER_PORT = 8888
 
+pc = packet_creator()
+
 class client:
     def __init__(self):
         self.name = None
@@ -36,16 +38,19 @@ def create_socket():
 def receive_message(conn):
     while True:
         packet = conn.recv(4096).decode('utf-8')
-        threading.Thread(target=handle_message, args=(packet,)).start()
+        threading.Thread(target=handle_message, args=(packet,conn,)).start()
 
 """handles the message (prints, sends, etc)"""
-def handle_message(packet):
+def handle_message(packet, conn):
     split_packet = packet.split("***")
     packet_type = split_packet[2]
     sender_id = split_packet[1]
-    if packet_type == "server_retrieval":
+    if packet_type == "server-retrieval":
         id = split_packet[3]
         print(id) #testing purposes
+        inner_client.set_id(id)
+        name_send_packet = pc.create_server_name_send(inner_client.id,inner_client.name)
+        conn.send(name_send_packet)
 
 
 
@@ -63,6 +68,7 @@ def main():
         client_socket.connect((SERVER_ADDRESS,SERVER_PORT))
 
         # start listening
+        #receive_message(client_socket)
         threading.Thread(target=receive_message, args=(client_socket,)).start()
 
     except Exception as e:
