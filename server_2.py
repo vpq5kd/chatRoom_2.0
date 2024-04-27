@@ -10,12 +10,14 @@ SERVER_PORT = 8888
 
 chat_members = []
 
+
 #classes:
 """defines a chat_member and holds data for use"""
 class chat_member:
-    def __init__(self,socket, address):
+    def __init__(self,socket, address, chat_id):
         self.conn = socket
         self.address = address
+        self.id = chat_id
         self.name = None
     def set_name(self,name):
         self.name = name
@@ -37,14 +39,28 @@ def print_information():
     print("-"*50+"\n")
 
 """receives messages from the client and preps them for routing"""
-def recieve_message(conn):
+def receive_message(conn):
     while True:
         packet = conn.recv(4096).decode('utf-8')
         threading.Thread(target=route_message, args=(packet,)).start()
+
+"""routes the message depending on the packet"""
 def route_message(packet):
     split_packet = packet.split("***")
-    packet_type = split_packet[1]
+    packet_type = split_packet[2]
+    sender_id = split_packet[1]
     if packet_type == "client-name":
+        name = split_packet[3]
+        member = get_member_by_id(sender_id)
+        member.set_name(name)
+
+"""get the chat member by ID"""
+def get_member_by_id(id):
+    for member in chat_members:
+        if member.id == id:
+            return member
+
+
 
 
 #main
@@ -54,9 +70,10 @@ def main():
         server_socket = create_server()
 
         #starts a thread to continuously listen for messages
-        threading.Thread(target=recieve_message, args=(server_socket,)).start()
+        threading.Thread(target=receive_message, args=(server_socket,)).start()
 
         #accepts new clients
+        id = 0
         while True:
             #client connection
             client_socket, client_address = server_socket.accept()
@@ -67,9 +84,11 @@ def main():
             chat_members.append(temp)
 
             #requests the client's name
-            name_request = packet_creator.create_server_name_retrieval()
+            name_request = packet_creator.create_server_name_retrieval(id)
             client_socket.send(name_request)
 
+            #iterates the id
+            id+=1
 
 
     except Exception as e:
