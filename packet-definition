@@ -1,0 +1,5 @@
+header = s-chat
+server -> name/username retrieval:
+s-chat***server-retrieval***//
+client -> name/username send:
+s-chat***client-name***<data>***//
