@@ -5,8 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2041b14a-8a7f-45e7-beb2-4803f882f10d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/client_2.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client_2.py" beforeDir="false" afterPath="$PROJECT_DIR$/client_2.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/packet-definition" beforeDir="false" afterPath="$PROJECT_DIR$/packet-definition" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/packet_creator.py" beforeDir="false" afterPath="$PROJECT_DIR$/packet_creator.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server_2.py" beforeDir="false" afterPath="$PROJECT_DIR$/server_2.py" afterDir="false" />
@@ -74,5 +74,16 @@
       <updated>1714244074522</updated>
     </task>
     <servers />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/server_2.py</url>
+          <line>71</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

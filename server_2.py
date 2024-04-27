@@ -10,6 +10,8 @@ SERVER_PORT = 8888
 
 chat_members = []
 
+SERVER_ID = 0
+
 
 #classes:
 """defines a chat_member and holds data for use"""
@@ -69,29 +71,30 @@ def main():
         #creates the server
         server_socket = create_server()
 
-        #starts a thread to continuously listen for messages
-        threading.Thread(target=receive_message, args=(server_socket,)).start()
-
         #accepts new clients
-        id = 0
+        client_id = 1
         while True:
             #client connection
             client_socket, client_address = server_socket.accept()
             print(f"accepted client {client_address}")
 
+            # starts a thread to continuously listen for messages
+            threading.Thread(target=receive_message, args=(client_socket,)).start()
+
             #creates new instance of chat_member for the client
-            temp = chat_member(client_socket,client_address)
+            temp = chat_member(client_socket,client_address,client_id)
             chat_members.append(temp)
 
+
             #requests the client's name
-            name_request = packet_creator.create_server_name_retrieval(id)
+            name_request = packet_creator.create_server_name_retrieval(SERVER_ID,client_id)
             client_socket.send(name_request)
 
             #iterates the id
-            id+=1
+            client_id+=1
 
 
     except Exception as e:
         server_socket.close()
         print(e)
-
+main()
