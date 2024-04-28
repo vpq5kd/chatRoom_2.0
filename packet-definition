@@ -10,4 +10,4 @@ client -> server | request active users:
 s-chat***<client_ID>***request-users***//
 
 server -> client | send active users:
-s-chat***<client_ID>***retrieved-users***<users>***//
+s-chat***<server_ID>***retrieved-users***<users>***//

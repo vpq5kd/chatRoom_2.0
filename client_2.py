@@ -2,6 +2,7 @@
 import socket
 import threading
 from packet_creator import packet_creator
+from Argument_Handler import argument_handler
 
 #global variables:
 SERVER_ADDRESS = '127.0.0.1'
@@ -42,15 +43,24 @@ def receive_message(conn):
 
 """handles the message (prints, sends, etc)"""
 def handle_message(packet, conn):
+    #processes information from the packet
     split_packet = packet.split("***")
     packet_type = split_packet[2]
     sender_id = split_packet[1]
+
+    #defines what to do if a server hello is sent
     if packet_type == "server-retrieval":
         id = split_packet[3]
-        print(id) #testing purposes
+        #print(id) #testing purposes
         inner_client.set_id(id)
         name_send_packet = pc.create_server_name_send(inner_client.id,inner_client.name)
         conn.send(name_send_packet)
+
+    #handles the response to a request for the list of members
+    elif packet_type == "retrieved-users":
+        data = split_packet[3]
+        print(data)
+
 
 
 
@@ -67,9 +77,18 @@ def main():
         #connect to server
         client_socket.connect((SERVER_ADDRESS,SERVER_PORT))
 
-        # start listening
-        #receive_message(client_socket)
+        #start listening
+
         threading.Thread(target=receive_message, args=(client_socket,)).start()
+
+        #wait until the ID is established
+        while(inner_client.id==None):
+            continue
+
+        #start the argument handler
+        ah = argument_handler(client_socket,inner_client.id)
+        while True:
+            ah.get_arguments()
 
     except Exception as e:
         client_socket.close()

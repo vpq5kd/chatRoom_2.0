@@ -28,7 +28,7 @@ class chat_member:
     def get_id(self):
         return self.id
     def __str__(self):
-        return f"{self.name} id:{self.id}"
+        return f"{self.name} ({self.id})"
 
 #functions
 
@@ -71,7 +71,7 @@ def route_message(packet):
     elif packet_type == "request-users":
         chat_member = get_member_by_id(sender_id)
         users = get_members()
-        users_packet = pc.create_server_actives_response(chat_member.id,users)
+        users_packet = pc.create_server_actives_response(SERVER_ID,users)
         chat_member.conn.send(users_packet)
 
 
@@ -83,7 +83,7 @@ def get_member_by_id(id):
 
 """returns a list of all members"""
 def get_members():
-    ret_string = ""
+    ret_string = "\n\n"
     for chat_member in chat_members:
         ret_string+=(chat_member.__str__()+"\n")
     return ret_string
