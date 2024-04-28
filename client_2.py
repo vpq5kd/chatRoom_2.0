@@ -1,5 +1,6 @@
 #imports
 import socket
+import sys
 import threading
 from packet_creator import packet_creator
 from Argument_Handler import argument_handler
@@ -89,7 +90,10 @@ def main():
         ah = argument_handler(client_socket,inner_client.id)
         while True:
             ah.get_arguments()
-
+    except KeyboardInterrupt:
+        disconnect_notice = pc.create_client_disconnect_notice(inner_client.id)
+        client_socket.send(disconnect_notice)
+        sys.exit()
     except Exception as e:
         client_socket.close()
         print(e)

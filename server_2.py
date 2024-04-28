@@ -74,6 +74,13 @@ def route_message(packet):
         users_packet = pc.create_server_actives_response(SERVER_ID,users)
         chat_member.conn.send(users_packet)
 
+    #handles a client disconnect notice
+    elif packet_type == "disconnect":
+        chat_member = get_member_by_id(sender_id)
+        remove_member_by_id(sender_id)
+        print(f"removed {chat_member.__str__()}")
+
+
 
 """get the chat member by ID"""
 def get_member_by_id(id):
@@ -87,6 +94,14 @@ def get_members():
     for chat_member in chat_members:
         ret_string+=(chat_member.__str__()+"\n")
     return ret_string
+
+"""removes client (disconnect)"""
+def remove_member_by_id(id):
+    index = 0
+    for chat_member in chat_members:
+        if chat_member.id == int(id):
+            chat_members.pop(index)
+        index+=1
 
 
 

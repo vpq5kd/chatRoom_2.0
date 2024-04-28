@@ -11,3 +11,6 @@ s-chat***<client_ID>***request-users***//
 
 server -> client | send active users:
 s-chat***<server_ID>***retrieved-users***<users>***//
+
+client -> server | disconnect:
+s-chat***<client_ID>***disconnect***//

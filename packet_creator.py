@@ -21,4 +21,8 @@ class packet_creator():
     def create_server_actives_response(self,id,users):
         return f"s-chat***{id}***retrieved-users***{users}***//".encode('utf-8')
 
+    """sends a disconnect notice to the server"""
+    def create_client_disconnect_notice(self,id):
+        return f"s-chat***{id}***disconnect***//".encode('utf-8')
+
 

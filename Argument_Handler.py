@@ -13,6 +13,8 @@ class argument_handler:
         if argument == self.arguments[0]:
             active_requests = self.pc.create_server_actives_request(self.id)
             self.conn.send(active_requests)
+        elif argument == self.arguments[1]:
+            raise KeyboardInterrupt
 
 
 
