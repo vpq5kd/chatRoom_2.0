@@ -6,7 +6,7 @@ from packet_creator import packet_creator
 
 #global variables
 SERVER_ADDRESS = '127.0.0.1'
-SERVER_PORT = 8888
+SERVER_PORT = 9999
 
 chat_members = []
 
@@ -111,6 +111,7 @@ def main():
     try:
         #creates the server
         server_socket = create_server()
+        print_information()
 
         #accepts new clients
         client_id = 1

@@ -7,7 +7,7 @@ from Argument_Handler import argument_handler
 
 #global variables:
 SERVER_ADDRESS = '127.0.0.1'
-SERVER_PORT = 8888
+SERVER_PORT = 9999
 
 pc = packet_creator()
 
