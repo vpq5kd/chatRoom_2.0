@@ -27,6 +27,8 @@ class chat_member:
         self.name = name
     def get_id(self):
         return self.id
+    def __str__(self):
+        return f"{self.name} id:{self.id}"
 
 #functions
 
@@ -52,9 +54,12 @@ def receive_message(conn):
 
 """routes the message depending on the packet"""
 def route_message(packet):
+    #translates the packet
     split_packet = packet.split("***")
     packet_type = split_packet[2]
     sender_id = split_packet[1]
+
+    #handles the client name after the server hello
     if packet_type == "client-name":
         name = split_packet[3]
         #print(name)
@@ -62,11 +67,26 @@ def route_message(packet):
         chat_member.set_name(name)
         print(chat_member.name)
 
+    #handles the client request for
+    elif packet_type == "request-users":
+        chat_member = get_member_by_id(sender_id)
+        users = get_members()
+        users_packet = pc.create_server_actives_response(chat_member.id,users)
+        chat_member.conn.send(users_packet)
+
+
 """get the chat member by ID"""
 def get_member_by_id(id):
     for chat_member in chat_members:
         if chat_member.id == int(id):
             return chat_member
+
+"""returns a list of all members"""
+def get_members():
+    ret_string = ""
+    for chat_member in chat_members:
+        ret_string+=(chat_member.__str__()+"\n")
+    return ret_string
 
 
 

@@ -1,7 +1,13 @@
 header = s-chat
 
-server -> name/username retrieval:
+server -> client | name/username retrieval:
 s-chat***<server_ID>***server-retrieval***<new_id>***//
 
-client -> name/username send:
+client -> server | name/username send:
 s-chat***<client_ID>***client-name***<name>***//
+
+client -> server | request active users:
+s-chat***<client_ID>***request-users***//
+
+server -> client | send active users:
+s-chat***<client_ID>***retrieved-users***<users>***//
