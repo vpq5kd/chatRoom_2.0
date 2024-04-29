@@ -19,7 +19,7 @@ class client_message_cache:
                                 id INTEGER PRIMARY KEY,
                                 sender_name TEXT NOT NULL,
                                 sender_id INTEGER,
-                                message TEXT NOT NULL
+                                message TEXT NOT NULL,
                                 time INTEGER)''')
 
         #commit and close
@@ -48,6 +48,7 @@ class client_message_cache:
         messages = cursor.fetchall()
 
         formatted_messages = self._format_messages(messages)
+        print("\n")
         for formatted_message in formatted_messages:
             print(formatted_message)
 
@@ -64,11 +65,12 @@ class client_message_cache:
             chat_message = message[2]
             time = self._translate_epoch_time(message[3])
 
-            message_string+=f"{sender_name} ({sender_id}) sent: {chat_message} at {time}\n"
-            message_delimiter = "-"*50+"\n"
+            message_string+=f"{sender_name} ({sender_id}) sent: {chat_message} at {time}"
+            message_delimiter = "-"*50
 
-            message_string_array.append(message_string)
             message_string_array.append(message_delimiter)
+            message_string_array.append(message_string)
+            message_string_array.append(message_delimiter+"\n")
         return message_string_array
 
     """translates the epoch time to est"""
