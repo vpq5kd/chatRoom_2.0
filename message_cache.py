@@ -11,7 +11,7 @@ class client_message_cache:
     def __init__(self,name):
         self.name = name
         #estabish connection
-        conn = sqlite3.connect('client_message_cache.db')
+        conn = sqlite3.connect('client_databases\\client_message_cache.db')
         cursor = conn.cursor()
 
         #create a new table for the user, holds if name is the same (username functionality)
@@ -28,7 +28,7 @@ class client_message_cache:
 
     """adds a new message to the database"""
     def add_message(self, sender_name, sender_id, message, time):
-        conn = sqlite3.connect('client_message_cache.db')
+        conn = sqlite3.connect('client_databases\\client_message_cache.db')
         cursor = conn.cursor()
 
         #add new message to the database
@@ -38,9 +38,9 @@ class client_message_cache:
         conn.commit()
         conn.close()
 
-    """gets the messages in the database by time"""
-    def get_messages_by_time(self):
-        conn = sqlite3.connect('client_message_cache.db')
+    """gets all the messages in the database by time"""
+    def get_all_messages(self):
+        conn = sqlite3.connect('client_databases\\client_message_cache.db')
         cursor = conn.cursor()
 
         #get messages (by most recent time)
@@ -50,6 +50,9 @@ class client_message_cache:
         formatted_messages = self._format_messages(messages)
         for formatted_message in formatted_messages:
             print(formatted_message)
+
+        conn.commit()
+        conn.close()
 
     """formats the database messages for printing to the terminal"""
     def _format_messages(self, messages):
@@ -75,6 +78,24 @@ class client_message_cache:
         est_time = utc_time.astimezone(pytz.timezone('US/Eastern'))
 
         return est_time
+
+    """gets the messages of a particular sender"""
+    def get_senders_messages(self,sender_name):
+        conn = sqlite3.connect('client_databases\\client_message_cache.db')
+        cursor = conn.cursor()
+
+        cursor.execute(f'''SELECT sender_name, sender_id, message, time FROM {self.name}_client_cache WHERE sender_name=? ORDER BY time DESC''', (sender_name,))
+        messages = cursor.fetchall()
+
+        formatted_messages = self._format_messages(messages)
+        for formatted_message in formatted_messages:
+            print(formatted_message)
+
+        conn.commit()
+        conn.close()
+
+
+
 
 
 
