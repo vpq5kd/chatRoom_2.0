@@ -25,4 +25,8 @@ class packet_creator():
     def create_client_disconnect_notice(self,id):
         return f"s-chat***{id}***disconnect***//".encode('utf-8')
 
+    """sends a message to the server for routing"""
+    def create_client_send_message_request(self,sender_id, recipient_id, recipient_message, send_time):
+        return f"s-chat***{sender_id}***send-message***{recipient_id},{recipient_message},{send_time}***//".encode('utf-8')
+
 

@@ -79,7 +79,7 @@ class client_message_cache:
 
         return est_time
 
-    """gets the messages of a particular sender"""
+    """gets the messages of a particular sender (ordered by most recent first)"""
     def get_senders_messages(self,sender_name):
         conn = sqlite3.connect('client_databases\\client_message_cache.db')
         cursor = conn.cursor()

@@ -14,3 +14,6 @@ s-chat***<server_ID>***retrieved-users***<users>***//
 
 client -> server | disconnect:
 s-chat***<client_ID>***disconnect***//
+
+client -> server | send message:
+s-chat***<client_ID>***send-message***<recipient_ID,recipient_message,send_time>***//
