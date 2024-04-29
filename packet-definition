@@ -17,3 +17,6 @@ s-chat***<client_ID>***disconnect***//
 
 client -> server | send message:
 s-chat***<client_ID>***send-message***<recipient_ID,recipient_message,send_time>***//
+
+server -> client | send message to requested client route:
+s-chat***<server_ID>***routed-message***<sender_name,sender_id,message,send_time>***//

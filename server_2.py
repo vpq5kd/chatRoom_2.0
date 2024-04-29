@@ -74,6 +74,20 @@ def route_message(packet):
         users_packet = pc.create_server_actives_response(SERVER_ID,users)
         chat_member.conn.send(users_packet)
 
+    #routes a single message to the destined client
+    elif packet_type == "send-message":
+        message_details = split_packet[3].split(',')
+
+        route_member = get_member_by_id(message_details[0])
+        message = message_details[1]
+        send_time = message_details[2]
+
+        send_member = get_member_by_id(sender_id)
+
+        route_message_packet = pc.create_server_routed_message_response(SERVER_ID,send_member.name,send_member.id,message,send_time)
+        route_member.conn.send(route_message_packet)
+
+
     #handles a client disconnect notice
     elif packet_type == "disconnect":
         chat_member = get_member_by_id(sender_id)
