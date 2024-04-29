@@ -31,6 +31,6 @@ class packet_creator():
 
     """sends the routed message from the server to the appropriate client"""
     def create_server_routed_message_response(self,SERVER_ID, sender_name, sender_id, message, send_time):
-        return f"s-chat***{SERVER_ID}***routed-message***{sender_name},{sender_id},{message},{send_time}***//"
+        return f"s-chat***{SERVER_ID}***routed-message***{sender_name},{sender_id},{message},{send_time}***//".encode('utf-8')
 
 

@@ -4,12 +4,14 @@ import sys
 import threading
 from packet_creator import packet_creator
 from Argument_Handler import argument_handler
+from message_cache import client_message_cache
 
 #global variables:
 SERVER_ADDRESS = '127.0.0.1'
 SERVER_PORT = 9999
 
 pc = packet_creator()
+
 
 class client:
     def __init__(self):
@@ -21,7 +23,6 @@ class client:
         self.id = id
 
 inner_client = client()
-
 #functions:
 
 """gets the client's name, welcomes them to the application"""
@@ -62,6 +63,17 @@ def handle_message(packet, conn):
         data = split_packet[3]
         print(data)
 
+    #deposits a routed message into the client's database
+    elif packet_type == "routed-message":
+        data = split_packet[3].split(',')
+        name = data[0]
+        id = data[1]
+        message = data[2]
+        time = data[3]
+        cmc = client_message_cache(inner_client.name)
+        cmc.add_message(name,id,message,time)
+
+
 
 
 
@@ -87,7 +99,7 @@ def main():
             continue
 
         #start the argument handler
-        ah = argument_handler(client_socket,inner_client.id)
+        ah = argument_handler(client_socket,inner_client.id,inner_client.name)
         while True:
             ah.get_arguments()
     except KeyboardInterrupt:

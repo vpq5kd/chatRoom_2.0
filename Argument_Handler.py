@@ -2,16 +2,18 @@
 import socket
 import time
 from packet_creator import packet_creator
+from message_cache import client_message_cache
 
 #classes
 class argument_handler:
 
     """constructor that takes in a connection and the client's id, initializes variables"""
-    def __init__(self, conn, id):
-        self.arguments = ["--get_online","--disconnect","--send_message"]
+    def __init__(self, conn, id, name):
+        self.arguments = ["--get_online","--disconnect","--send_message","--see_all_messages"]
         self.conn = conn
         self.pc = packet_creator()
         self.id = id
+        self.name = name
 
     """when used in a while loop -> continuously gets messages"""
     def get_arguments(self):
@@ -29,6 +31,9 @@ class argument_handler:
             recipient_id, recipient_message, send_time = self._ask_for_send_details()
             message_packet = self.pc.create_client_send_message_request(self.id, recipient_id, recipient_message, send_time)
             self.conn.send(message_packet)
+        elif argument == self.arguments[3]:
+            cmc = client_message_cache(self.name)
+            cmc.get_all_messages()
 
 
     """helper method to ask for the necessary details of the message"""
