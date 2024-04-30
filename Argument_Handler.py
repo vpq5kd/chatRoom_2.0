@@ -9,7 +9,7 @@ class argument_handler:
 
     """constructor that takes in a connection and the client's id, initializes variables"""
     def __init__(self, conn, id, name):
-        self.arguments = ["--get_online","--disconnect","--send_message","--see_all_messages"]
+        self.arguments = ["--get_online","--disconnect","--send_message","--see_all_messages","--start_continuous_chat"]
         self.conn = conn
         self.pc = packet_creator()
         self.id = id
@@ -34,6 +34,10 @@ class argument_handler:
         elif argument == self.arguments[3]:
             cmc = client_message_cache(self.name)
             cmc.get_all_messages()
+        elif argument == self.arguments[4]:
+            chat_with_id = self._ask_for_cc_details()
+            cc_request = self.pc.create_client_continuous_chat_request(self.id,chat_with_id)
+            self.conn.send(cc_request)
 
 
     """helper method to ask for the necessary details of the message"""
@@ -42,6 +46,11 @@ class argument_handler:
         recipient_message = input("message: ")
         send_time = int(time.time())
         return recipient_id, recipient_message, send_time
+
+    """helper method to ask for the id of the continuous chat member"""
+    def _ask_for_cc_details(self):
+        chat_with_id = input("enter the id of the person you'd like to chat with: ")
+        return chat_with_id
 
 
 

@@ -20,3 +20,9 @@ s-chat***<client_ID>***send-message***<recipient_ID,recipient_message,send_time>
 
 server -> client | send message to requested client route:
 s-chat***<server_ID>***routed-message***<sender_name,sender_id,message,send_time>***//
+
+client -> server | requests to start a continuous chat:
+s-chat***<client_ID>***continuous-chat***<chat_with_id>***//
+
+server -> client | routes the cc request to the requested chat_with_client
+s-chat***<server_ID>***routed-cc***<wants_to_chat_name,wants_to_chat_id>***//

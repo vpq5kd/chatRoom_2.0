@@ -33,4 +33,8 @@ class packet_creator():
     def create_server_routed_message_response(self,SERVER_ID, sender_name, sender_id, message, send_time):
         return f"s-chat***{SERVER_ID}***routed-message***{sender_name},{sender_id},{message},{send_time}***//".encode('utf-8')
 
+    """requests to start a continuous chat"""
+    def create_client_continuous_chat_request(self,client_id, chat_with_id):
+        return f"s-chat***{client_id}***{chat_with_id}"
+    def create_server_routed_cc_response(self,SERVER_ID,wants_to_chat_with_name, wants_to_chat_with_id):
 
