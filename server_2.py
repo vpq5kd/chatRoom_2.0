@@ -87,6 +87,18 @@ def route_message(packet):
         route_message_packet = pc.create_server_routed_message_response(SERVER_ID,send_member.name,send_member.id,message,send_time)
         route_member.conn.send(route_message_packet)
 
+    #routes a continuous chat request to the destined client
+    elif packet_type == "continuous-chat":
+        requested_client_id = split_packet[3]
+        requested_client = get_member_by_id(requested_client_id)
+        requester = get_member_by_id(sender_id)
+
+        routed_cc_packet = pc.create_server_routed_cc_response(SERVER_ID,requester.name,requester.id)
+        requested_client.conn.send(routed_cc_packet)
+
+
+
+
 
     #handles a client disconnect notice
     elif packet_type == "disconnect":

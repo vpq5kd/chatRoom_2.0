@@ -2,6 +2,7 @@
 import socket
 import sys
 import threading
+import subprocess
 from packet_creator import packet_creator
 from Argument_Handler import argument_handler
 from message_cache import client_message_cache
@@ -72,6 +73,19 @@ def handle_message(packet, conn):
         time = data[3]
         cmc = client_message_cache(inner_client.name)
         cmc.add_message(name,id,message,time)
+
+    #asks the client if they want to start a continuous chat, starts logic if they do
+    elif packet_type == "routed-cc":
+        data = split_packet[3].split(',')
+        name = data[0]
+        id = data[1]
+        start_cc(name, id)
+
+def start_cc(name, id):
+    start_session_code = f"print('{name} ({id}) would like to start a continuous chat with you!')"
+    command = f'start cmd /k python -c "{start_session_code}"'
+    subprocess.Popen(command, shell=True)
+
 
 
 
