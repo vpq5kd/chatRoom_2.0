@@ -61,7 +61,7 @@ public class LoginController {
             try {
                 loginMessageLabel.setText("Login successful.");
                 loginMessageLabel.setStyle("-fx-text-fill: green;");
-                switchToCourseSearchScene(event); // Call the scene switching method after the delay
+                switchToChatsScene(event); // Call the scene switching method after the delay
             } catch (Exception e) {
                 e.printStackTrace(); // Handle potential exceptions
             }
@@ -183,8 +183,8 @@ public class LoginController {
         return UsernameExists;
     }
 
-    public void switchToCourseSearchScene(ActionEvent event) throws Exception {
-        ViewSwitcher.switchTo(View.COURSE_SEARCH);
+    public void switchToChatsScene(ActionEvent event) throws Exception {
+        ViewSwitcher.switchTo(View.LOGIN);
     }
 
     public void exitButtonOnAction(ActionEvent event) {
