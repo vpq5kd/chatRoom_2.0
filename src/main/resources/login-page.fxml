@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.virginia.sde.reviews.LoginController">
+   <right>
+      <AnchorPane prefHeight="400.0" prefWidth="344.0" style="-fx-background-color: #2a0c36;" BorderPane.alignment="CENTER">
+         <children>
+            <Label layoutX="58.0" layoutY="266.0" prefHeight="17.0" prefWidth="60.0" text="Username" textFill="WHITE" />
+            <Label layoutX="58.0" layoutY="297.0" prefHeight="17.0" prefWidth="60.0" text="Password" textFill="WHITE" />
+            <TextField fx:id="usernameSignUpTextField" layoutX="132.0" layoutY="262.0" promptText="Username" />
+            <PasswordField fx:id="passwordSignUpTextField" layoutX="132.0" layoutY="293.0" promptText="Password" />
+            <Button fx:id="loginButton" layoutX="69.0" layoutY="151.0" mnemonicParsing="false" onAction="#loginButtonOnAction" prefHeight="25.0" prefWidth="209.0" style="-fx-background-color: #4d3c77;" text="LOGIN" textFill="WHITE" />
+            <Button fx:id="signUpButton" layoutX="69.0" layoutY="336.0" mnemonicParsing="false" onAction="#signUpButtonOnAction" prefHeight="25.0" prefWidth="209.0" style="-fx-background-color: #4d3c77;" text="SIGN UP" textFill="WHITE" />
+            <Label fx:id="signUpMessageLabel" alignment="CENTER" layoutX="-1.0" layoutY="318.0" prefHeight="18.0" prefWidth="346.0" textFill="#ab0000" wrapText="true" />
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="15.0" layoutY="229.0" prefHeight="19.0" prefWidth="245.0">
+               <font>
+                  <Font name="System Italic" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="58.0" layoutY="81.0" prefHeight="17.0" prefWidth="60.0" text="Username" textFill="WHITE" />
+            <TextField fx:id="usernameTextField" layoutX="132.0" layoutY="77.0" promptText="Username" />
+            <Label layoutX="58.0" layoutY="108.0" prefHeight="17.0" prefWidth="60.0" text="Password" textFill="WHITE" />
+            <PasswordField fx:id="passwordTextField" layoutX="132.0" layoutY="104.0" promptText="Password" />
+            <Line endX="100.0" layoutX="173.0" layoutY="200.0" startX="-100.0" stroke="#4d3c77" />
+            <Label fx:id="loginMessageLabel" alignment="CENTER" layoutX="2.0" layoutY="129.0" prefHeight="18.0" prefWidth="342.0" textFill="#ab0000" wrapText="true" />
+            <Label alignment="CENTER" layoutX="1.0" layoutY="229.0" prefHeight="19.0" prefWidth="344.0" text="Create New Account" textFill="WHITE">
+               <font>
+                  <Font name="Verdana" size="15.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="3.0" layoutY="49.0" prefHeight="21.0" prefWidth="341.0" text="Login" textFill="WHITE">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Rectangle fx:id="yellowBoxLoading" arcHeight="5.0" arcWidth="5.0" fill="#ffcb22" height="47.0" layoutX="32.0" layoutY="163.0" stroke="WHITE" strokeType="INSIDE" visible="false" width="200.0" />
+            <Label fx:id="loadingIn" alignment="CENTER" layoutX="32.0" layoutY="178.0" prefHeight="17.0" prefWidth="202.0" text="Signing in..." textFill="#140000" visible="false">
+               <font>
+                  <Font name="System Bold Italic" size="12.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </right>
+   <center>
+      <AnchorPane prefHeight="355.0" prefWidth="105.0" style="-fx-background-color: #E19898;" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+         <children>
+            <Label alignment="CENTER" layoutX="7.0" layoutY="167.0" prefHeight="17.0" prefWidth="228.0" text="COURSE REVIEW" textFill="WHITE">
+               <font>
+                  <Font name="Verdana Bold" size="19.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="8.0" layoutY="191.0" prefHeight="17.0" prefWidth="226.0" text="LOGIN" textFill="WHITE">
+               <font>
+                  <Font name="Verdana Bold" size="15.0" />
+               </font>
+            </Label>
+            <Button fx:id="exitButton" layoutX="94.0" layoutY="216.0" mnemonicParsing="false" onAction="#exitButtonOnAction" prefHeight="25.0" prefWidth="56.0" style="-fx-background-color: #2a0c36;" text="CLOSE" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Button>
+            <Circle fill="#2a0c36" layoutX="-10.0" layoutY="35.0" radius="89.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+            <Circle fill="#2a0c36" layoutX="85.0" layoutY="-26.0" radius="98.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+            <Circle fill="#4d3c77" layoutX="-35.0" layoutY="5.0" radius="107.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+            <Circle fill="#4d3c77" layoutX="89.0" layoutY="-22.0" radius="75.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+            <Circle fill="#a2678a" layoutX="-23.0" layoutY="14.0" radius="82.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+            <Circle fill="#a2678a" layoutX="85.0" layoutY="-31.0" radius="71.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+            <Circle fill="#e19898" layoutX="85.0" layoutY="-37.0" radius="65.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+            <Circle fill="#e19898" layoutX="-23.0" layoutY="14.0" radius="72.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>
