@@ -12,15 +12,33 @@ public class MessageHandler {
                 handleServerRetrieval();
                 break;
             case "invalid-credentials":
-                synchronized (LoggedInUser.class){
-                    LoggedInUser.credentialsValidated = false;
-                }
+                Thread thread = new Thread(() -> {
+                    synchronized (LoggedInUser.class){
+                        LoggedInUser.credentialsValidated = false;
+                    }
 
-                handleInvalidCredentials();
+                    handleInvalidCredentials();
+                });
+                thread.start();
+                try {
+                    thread.join();
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
                 break;
             case "valid-credentials":
-                synchronized (LoggedInUser.class){
-                    LoggedInUser.credentialsValidated = false;
+                Thread thread1 = new Thread(() -> {
+                    synchronized (LoggedInUser.class){
+                        LoggedInUser.credentialsValidated = false;
+                    }
+
+                    handleValidCredentials();
+                });
+                thread1.start();
+                try {
+                    thread1.join();
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
                 }
 
                 handleValidCredentials();
