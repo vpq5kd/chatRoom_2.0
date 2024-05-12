@@ -61,8 +61,11 @@ def route_message(packet):
 
     #handles the client name after the server hello
     if packet_type == "client-name":
-        name = split_packet[3]
+        content = split_packet[3].split(",")
         #print(name)
+        username = content[0]
+        password = content[1]
+
         chat_member = get_member_by_id(sender_id)
         chat_member.set_name(name)
         print(chat_member.name)
