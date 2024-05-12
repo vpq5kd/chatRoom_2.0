@@ -7,7 +7,6 @@ public class MessageHandler {
         switch(messageType){
             case "server-retrieval":
                 handleServerRetrieval();
-
         }
     }
 
@@ -18,6 +17,6 @@ public class MessageHandler {
         messageContent = parts[3];
     }
     private void handleServerRetrieval(){
-
+        ConnectionID.ID = messageContent;
     }
 }

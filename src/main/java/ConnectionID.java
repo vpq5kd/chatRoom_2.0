@@ -1,3 +1,3 @@
 public class ConnectionID {
-    public static int ID;
+    public static String ID;
 }
