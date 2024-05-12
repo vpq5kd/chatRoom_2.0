@@ -9,8 +9,9 @@ import pytz
 class credentials_handler:
     """initializes the table"""
     def __init__(self):
+        self.db_file = 'C:\\Users\\Smspaner\\PycharmProjects\\chatRoom_2.0\\server_databases\\server_database.db'
         #estabish connection
-        conn = sqlite3.connect('server_databases\\server_database.db')
+        conn = sqlite3.connect(self.db_file)
         cursor = conn.cursor()
 
         #create a new table for the user, holds if name is the same (username functionality)
@@ -23,7 +24,7 @@ class credentials_handler:
         conn.commit()
         conn.close()
     def authenticate(self,username,password):
-        conn = sqlite3.connect('server_databases\\server_database.db')
+        conn = sqlite3.connect(self.db_file)
         cursor = conn.cursor()
 
         #search username with a given password
@@ -35,6 +36,15 @@ class credentials_handler:
             if password == row:
                 return True
         return False
+    def add_user(self,username,password):
+        conn = sqlite3.connect(self.db_file)
+        cursor = conn.cursor()
+
+        #add user
+        cursor.execute("INSERT INTO credentials (username, password) VALUES (?,?)", (username,password))
+
+        #commit
+        conn.commit()
 
 
 
