@@ -15,6 +15,8 @@ public class User {
     @Column(name = "Password", nullable = false)
     private String Password;
 
+
+
     public User(String username, String password) {
         this.Username = username;
         this.Password = password;

@@ -4,7 +4,7 @@
         <property name="format_sql">false</property>
         <property name="dialect">org.sqlite.hibernate.dialect.SQLiteDialect</property>
         <property name="connection.driver_class">org.sqlite.JDBC</property>
-        <property name="connection.url">jdbc:sqlite:db_course_review.sqlite3</property>
+        <property name="connection.url">jdbc:sqlite:db_s-chat.sqlite3</property>
         <property name="connection.username">username</property>
         <property name="connection.password">password</property>
 

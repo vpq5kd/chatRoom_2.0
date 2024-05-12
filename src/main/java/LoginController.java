@@ -15,6 +15,7 @@ public class LoginController {
 
     private static Session session;
     private Socket conn;
+    private Alert alert = new Alert();
     private boolean connected = false;
 
     @FXML
@@ -94,7 +95,8 @@ public class LoginController {
         String password = passwordTextField.getText();
 
         if (!connected){
-            loginMessageLabel
+            alert.Alert(loginMessageLabel,"Please connect to a S-Chat server before logging in.");
+            return;
         }
 
         if (username.isEmpty() || password.isEmpty()) {
