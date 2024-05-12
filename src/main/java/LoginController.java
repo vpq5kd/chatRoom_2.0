@@ -7,11 +7,17 @@ import javafx.scene.control.TextField;
 import org.hibernate.Session;
 
 import javax.persistence.TypedQuery;
+import java.net.Socket;
+import java.util.regex.Pattern;
 
 
 public class LoginController {
 
     private static Session session;
+    private Socket conn;
+
+    @FXML
+    private Button connectButton;
 
     @FXML
     private TextField usernameSignUpTextField;
@@ -34,7 +40,51 @@ public class LoginController {
     private Label loginMessageLabel;
     @FXML
     private Label loadingIn;
+    @FXML
+    private TextField serverAddress;
+    @FXML
+    private Label connectionMessageLabel;
 
+
+    public void connectButtonOnAction(ActionEvent event) {
+        String[] parts = serverAddress.getText().split(":");
+        String ipAddress = parts[0];
+        String portStr = parts[1];
+        if (!isValidIp(ipAddress)){
+            connectionMessageLabel.setStyle("-fx-text-fill: red");
+            connectionMessageLabel.setText("Invalid IP, please try again.");
+            return;
+        } else if (!isValidPort(portStr)) {
+            connectionMessageLabel.setStyle("-fx-text-fill: red;");
+            connectionMessageLabel.setText("Port must be a number between 0 and 65535.");
+            return;
+        }
+
+        ConnectionHandler connectionHandler = new ConnectionHandler();
+        try {
+            conn = connectionHandler.connect(ipAddress, Integer.parseInt(portStr));
+            Listener listener = new Listener(conn);
+            listener.listen();
+            connectionMessageLabel.setStyle("-fx-text-fill: green");
+            connectionMessageLabel.setText("Connection successful!");
+        }catch (Exception e){
+            connectionMessageLabel.setStyle("-fx-text-fill: red;");
+            connectionMessageLabel.setText("Connection failed, please try again.");
+        }
+    }
+    private boolean isValidIp(String ipAddress){
+        String ipRegex = "^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$";
+        Pattern pattern = Pattern.compile(ipRegex);
+        return pattern.matcher(ipAddress).matches();
+    }
+    private boolean isValidPort(String port){
+        try{
+            int portInt = Integer.parseInt(port);
+            return portInt>=0 && portInt<= 65535;
+        }catch (NumberFormatException e){
+            return false;
+        }
+    }
     public void loginButtonOnAction(ActionEvent event)
     {
         String username = usernameTextField.getText();
@@ -190,5 +240,7 @@ public class LoginController {
     public void exitButtonOnAction(ActionEvent event) {
         Platform.exit();
     }
+
+
 }
 
