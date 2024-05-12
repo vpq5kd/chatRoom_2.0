@@ -2,6 +2,9 @@ public class MessageHandler {
     private int serverID;
     private String messageType;
     private String messageContent;
+
+    public static boolean validationMessageHandled = false;
+    public static String isValid;
     public void handleMessage(String message){
         splitMessage(message);
         switch(messageType){
@@ -27,9 +30,11 @@ public class MessageHandler {
         ConnectionID.ID = messageContent;
     }
     private void handleInvalidCredentials(){
-
+        validationMessageHandled = true;
+        isValid = "no";
     }
     private void handleValidCredentials(){
-
+        validationMessageHandled = true;
+        isValid="yes";
     }
 }

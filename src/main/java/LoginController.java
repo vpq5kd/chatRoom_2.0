@@ -199,6 +199,16 @@ public class LoginController {
         try {
             String message = "s-chat***"+ConnectionID.ID+"***"+"client-name"+"***"+username+","+password+"***//\n";
             Listener.connection.send(message);
+            while (!MessageHandler.validationMessageHandled){}
+            switch (MessageHandler.isValid){
+                case "no":
+                    MessageHandler.validationMessageHandled = false;
+                    return UserExists;
+                case "yes":
+                    MessageHandler.validationMessageHandled = false;
+                    UserExists = true;
+                    return UserExists;
+            }
         } catch (Exception e) {
             loginMessageLabel.setText("Error occurred during log-in. Please try again.");
             loginMessageLabel.setStyle("-fx-text-fill: red;");
