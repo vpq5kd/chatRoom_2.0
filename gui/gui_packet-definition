@@ -1,0 +1,28 @@
+header = s-chat
+
+server -> client | name/username retrieval:
+s-chat***<server_ID>***server-retrieval***<new_id>***//
+
+client -> server | name/username send:
+s-chat***<client_ID>***client-name***<name,password>***//
+
+client -> server | request active users:
+s-chat***<client_ID>***request-users***//
+
+server -> client | send active users:
+s-chat***<server_ID>***retrieved-users***<users>***//
+
+client -> server | disconnect:
+s-chat***<client_ID>***disconnect***//
+
+client -> server | send message:
+s-chat***<client_ID>***send-message***<recipient_ID,recipient_message,send_time>***//
+
+server -> client | send message to requested client route:
+s-chat***<server_ID>***routed-message***<sender_name,sender_id,message,send_time>***//
+
+client -> server | requests to start a continuous chat:
+s-chat***<client_ID>***continuous-chat***<chat_with_id>***//
+
+server -> client | routes the cc request to the requested chat_with_client
+s-chat***<server_ID>***routed-cc***<wants_to_chat_name,wants_to_chat_id>***//

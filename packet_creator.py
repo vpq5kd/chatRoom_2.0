@@ -7,7 +7,7 @@ class packet_creator():
 
     """Grabs the name of the client, also sends their session user-id"""
     def create_server_name_retrieval(self,server_id,client_id):
-        return f"s-chat***{server_id}***server-retrieval***{client_id}***//".encode('utf-8')
+        return f"s-chat***{server_id}***server-retrieval***{client_id}***//\n".encode('utf-8')
 
     """sends the name of the client back to the server"""
     def create_server_name_send(self,id, name):
