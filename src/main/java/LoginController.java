@@ -17,6 +17,8 @@ public class LoginController {
     private Socket conn;
     private Alert alert = new Alert();
     private boolean connected = false;
+    public static boolean credentialsValidated = false;
+    public static boolean credentialsValid = false;
 
     @FXML
     private Button connectButton;
@@ -49,31 +51,37 @@ public class LoginController {
 
 
     public void connectButtonOnAction(ActionEvent event) {
-        String[] parts = serverAddress.getText().split(":");
-        String ipAddress = parts[0];
-        String portStr = parts[1];
-        if (!isValidIp(ipAddress)){
-            connectionMessageLabel.setStyle("-fx-text-fill: red");
-            connectionMessageLabel.setText("Invalid IP, please try again.");
-            return;
-        } else if (!isValidPort(portStr)) {
-            connectionMessageLabel.setStyle("-fx-text-fill: red;");
-            connectionMessageLabel.setText("Port must be a number between 0 and 65535.");
-            return;
-        }
-
-        ConnectionHandler connectionHandler = new ConnectionHandler();
         try {
-            conn = connectionHandler.connect(ipAddress, Integer.parseInt(portStr));
-            Listener listener = new Listener(conn);
-            Thread thread = new Thread(listener::listen);
-            thread.start();
-            connected = true;
-            connectionMessageLabel.setStyle("-fx-text-fill: green");
-            connectionMessageLabel.setText("Connection successful!");
+            String[] parts = serverAddress.getText().split(":");
+            String ipAddress = parts[0];
+            String portStr = parts[1];
+            if (!isValidIp(ipAddress)) {
+                connectionMessageLabel.setStyle("-fx-text-fill: red");
+                connectionMessageLabel.setText("Invalid IP, please try again.");
+                return;
+            } else if (!isValidPort(portStr)) {
+                connectionMessageLabel.setStyle("-fx-text-fill: red;");
+                connectionMessageLabel.setText("Port must be a number between 0 and 65535.");
+                return;
+            }
+
+
+            ConnectionHandler connectionHandler = new ConnectionHandler();
+            try {
+                conn = connectionHandler.connect(ipAddress, Integer.parseInt(portStr));
+                Listener listener = new Listener(conn);
+                Thread thread = new Thread(listener::listen);
+                thread.start();
+                connected = true;
+                connectionMessageLabel.setStyle("-fx-text-fill: green");
+                connectionMessageLabel.setText("Connection successful!");
+            } catch (Exception e) {
+                connectionMessageLabel.setStyle("-fx-text-fill: red;");
+                connectionMessageLabel.setText("Connection failed, please try again.");
+            }
         }catch (Exception e){
-            connectionMessageLabel.setStyle("-fx-text-fill: red;");
-            connectionMessageLabel.setText("Connection failed, please try again.");
+            alert.Alert(connectionMessageLabel,"something went wrong, please try again.");
+            return;
         }
     }
     private boolean isValidIp(String ipAddress){
@@ -115,14 +123,6 @@ public class LoginController {
             usernameTextField.clear();
             passwordTextField.clear();
 
-
-            try {
-                loginMessageLabel.setText("Login successful.");
-                loginMessageLabel.setStyle("-fx-text-fill: green;");
-                switchToChatsScene(event); // Call the scene switching method after the delay
-            } catch (Exception e) {
-                e.printStackTrace(); // Handle potential exceptions
-            }
         } else {
             loginMessageLabel.setText("Incorrect login credentials, please try again.");
             loginMessageLabel.setStyle("-fx-text-fill: red;");
@@ -199,22 +199,18 @@ public class LoginController {
         try {
             String message = "s-chat***"+ConnectionID.ID+"***"+"client-name"+"***"+username+","+password+"***//\n";
             Listener.connection.send(message);
-            while (!MessageHandler.validationMessageHandled){}
-            switch (MessageHandler.isValid){
-                case "no":
-                    MessageHandler.validationMessageHandled = false;
-                    return UserExists;
-                case "yes":
-                    MessageHandler.validationMessageHandled = false;
-                    UserExists = true;
-                    return UserExists;
+            while(!credentialsValidated){}
+            if (credentialsValid){
+                UserExists = true;
             }
+
         } catch (Exception e) {
             loginMessageLabel.setText("Error occurred during log-in. Please try again.");
             loginMessageLabel.setStyle("-fx-text-fill: red;");
             usernameTextField.clear();
             passwordTextField.clear();
         }
+        credentialsValidated = false;
         return UserExists;
     }
 
@@ -240,9 +236,6 @@ public class LoginController {
         return UsernameExists;
     }
 
-    public void switchToChatsScene(ActionEvent event) throws Exception {
-        ViewSwitcher.switchTo(View.LOGIN);
-    }
 
     public void exitButtonOnAction(ActionEvent event) {
         Platform.exit();

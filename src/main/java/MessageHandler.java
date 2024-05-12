@@ -3,7 +3,7 @@ public class MessageHandler {
     private String messageType;
     private String messageContent;
 
-    public static boolean validationMessageHandled = false;
+//    public static boolean validationMessageHandled = false;
     public static String isValid;
     public void handleMessage(String message){
         splitMessage(message);
@@ -30,11 +30,11 @@ public class MessageHandler {
         ConnectionID.ID = messageContent;
     }
     private void handleInvalidCredentials(){
-        validationMessageHandled = true;
-        isValid = "no";
+        LoginController.credentialsValidated = true;
+        LoginController.credentialsValid = false;
     }
     private void handleValidCredentials(){
-        validationMessageHandled = true;
-        isValid="yes";
+        LoginController.credentialsValidated = true;
+        LoginController.credentialsValid = true;
     }
 }
