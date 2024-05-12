@@ -7,6 +7,13 @@ public class MessageHandler {
         switch(messageType){
             case "server-retrieval":
                 handleServerRetrieval();
+                break;
+            case "invalid-credentials":
+                handleInvalidCredentials();
+                break;
+            case "valid-credentials":
+                handleValidCredentials();
+                break;
         }
     }
 
@@ -18,5 +25,11 @@ public class MessageHandler {
     }
     private void handleServerRetrieval(){
         ConnectionID.ID = messageContent;
+    }
+    private void handleInvalidCredentials(){
+
+    }
+    private void handleValidCredentials(){
+
     }
 }
