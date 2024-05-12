@@ -197,24 +197,13 @@ public class LoginController {
     private boolean userExists(String username, String password){
         Boolean UserExists = false;
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            session.beginTransaction();
-            String hql = "From User WHERE Username = :username AND Password = :password";
-            TypedQuery<User> query = session.createQuery(hql, User.class);
-            query.setParameter("username", username);
-            query.setParameter("password", password);
-            User user = query.getSingleResult();
-            UserExists = user!=null;
-
+            String message = "s-chat***"+ConnectionID.ID+"***"+"client-name"+"***"+username+","+password+"***//\n";
+            Listener.connection.send(message);
         } catch (Exception e) {
             loginMessageLabel.setText("Error occurred during log-in. Please try again.");
             loginMessageLabel.setStyle("-fx-text-fill: red;");
             usernameTextField.clear();
             passwordTextField.clear();
-        } finally {
-            if (session != null && session.isOpen()) {
-                session.close();
-            }
         }
         return UserExists;
     }

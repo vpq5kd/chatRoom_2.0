@@ -2,7 +2,7 @@ import java.io.IOException;
 import java.net.Socket;
 
 public class Listener {
-    Connection connection;
+    public static Connection connection;
     MessageHandler messageHandler = new MessageHandler();
     public Listener(Socket conn) throws IOException {
          connection = new Connection(conn);
