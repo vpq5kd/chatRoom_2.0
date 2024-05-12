@@ -5,6 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import org.hibernate.Session;
+import org.hibernate.annotations.common.util.impl.Log;
 
 import javax.persistence.TypedQuery;
 import java.net.Socket;
@@ -16,6 +17,7 @@ public class LoginController {
     private static Session session;
     private Socket conn;
     private Alert alert = new Alert();
+    public static  String credentialsMessage;
     private boolean connected = false;
     private final Object lock = new Object();
 
@@ -97,6 +99,9 @@ public class LoginController {
         }
     }
     public void loginButtonOnAction(ActionEvent event) {
+
+
+
         try {
             String username = usernameTextField.getText();
             String password = passwordTextField.getText();
@@ -117,6 +122,8 @@ public class LoginController {
         }catch (Exception e){
             alert.Alert(loginMessageLabel,"Error during login, please try again.");
         }
+        usernameTextField.clear();
+        passwordTextField.clear();
     }
 
 
@@ -193,6 +200,15 @@ public class LoginController {
                 loginMessageLabel.setText("authenticating...");
                 loginMessageLabel.setStyle("-fx-text-fill: green");
             }
+//            while(credentialsMessage.isEmpty()){}
+//            if(credentialsMessage.equals("invalid-credentials")){
+//                alert.Alert(loginMessageLabel, "login failed");
+//                usernameTextField.clear();
+//                passwordTextField.clear();
+//            }
+//            else if(credentialsMessage.equals("valid-credentials")){
+//                alert.Success(loginMessageLabel, "login successful");
+//            }
 
             if (LoggedInUser.credentialsValid){
                 loginMessageLabel.setText("login successful.");

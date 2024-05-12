@@ -1,3 +1,5 @@
+import org.hibernate.annotations.common.util.impl.Log;
+
 public class MessageHandler {
     private int serverID;
     private String messageType;
@@ -9,38 +11,23 @@ public class MessageHandler {
         splitMessage(message);
         switch(messageType){
             case "server-retrieval":
+
                 handleServerRetrieval();
                 break;
             case "invalid-credentials":
-                Thread thread = new Thread(() -> {
-                    synchronized (LoggedInUser.class){
-                        LoggedInUser.credentialsValidated = false;
-                    }
-
-                    handleInvalidCredentials();
-                });
-                thread.start();
-                try {
-                    thread.join();
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
+                synchronized (LoggedInUser.class){
+                    LoggedInUser.credentialsValidated = false;
                 }
+//                LoginController.credentialsMessage = "";
+//                LoginController.credentialsMessage = messageContent;
+                handleInvalidCredentials();
                 break;
             case "valid-credentials":
-                Thread thread1 = new Thread(() -> {
-                    synchronized (LoggedInUser.class){
-                        LoggedInUser.credentialsValidated = false;
-                    }
-
-                    handleValidCredentials();
-                });
-                thread1.start();
-                try {
-                    thread1.join();
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
+                synchronized (LoggedInUser.class){
+                    LoggedInUser.credentialsValidated = false;
                 }
-
+//                LoginController.credentialsMessage = "";
+//                LoginController.credentialsMessage = messageContent;
                 handleValidCredentials();
                 break;
         }
