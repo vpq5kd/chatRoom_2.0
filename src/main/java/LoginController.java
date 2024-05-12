@@ -97,40 +97,30 @@ public class LoginController {
             return false;
         }
     }
-    public void loginButtonOnAction(ActionEvent event)
-    {
-        String username = usernameTextField.getText();
-        String password = passwordTextField.getText();
+    public void loginButtonOnAction(ActionEvent event) {
+        try {
+            String username = usernameTextField.getText();
+            String password = passwordTextField.getText();
 
-        if (!connected){
-            alert.Alert(loginMessageLabel,"Please connect to a S-Chat server before logging in.");
-            return;
+            if (!connected) {
+                alert.Alert(loginMessageLabel, "Please connect to a S-Chat server before logging in.");
+                return;
+            }
+
+            if (username.isEmpty() || password.isEmpty()) {
+                loginMessageLabel.setText("Please enter a username and password.");
+                loginMessageLabel.setStyle("-fx-text-fill: red;");
+                usernameTextField.clear();
+                passwordTextField.clear();
+                return;
+            }
+            userExists(username,password);
+        }catch (Exception e){
+            alert.Alert(loginMessageLabel,"Error during login, please try again.");
         }
-
-        if (username.isEmpty() || password.isEmpty()) {
-            loginMessageLabel.setText("Please enter a username and password.");
-            loginMessageLabel.setStyle("-fx-text-fill: red;");
-            usernameTextField.clear();
-            passwordTextField.clear();
-            return;
-        }
-        if (userExists(username, password)) {
-
-            LoggedInUser.username = username;
-
-            loginMessageLabel.setText("Login successful.");
-            loginMessageLabel.setStyle("-fx-text-fill: green;");
-            usernameTextField.clear();
-            passwordTextField.clear();
-
-        } else {
-            loginMessageLabel.setText("Incorrect login credentials, please try again.");
-            loginMessageLabel.setStyle("-fx-text-fill: red;");
-            usernameTextField.clear();
-            passwordTextField.clear();
-        }
-
     }
+
+
 
     public void signUpButtonOnAction(ActionEvent event) {
 
@@ -194,14 +184,14 @@ public class LoginController {
         }
     }
 
-    private boolean userExists(String username, String password){
-        Boolean UserExists = false;
+    private void userExists(String username, String password){
         try {
             String message = "s-chat***"+ConnectionID.ID+"***"+"client-name"+"***"+username+","+password+"***//\n";
             Listener.connection.send(message);
-            while(!credentialsValidated){}
-            if (credentialsValid){
-                UserExists = true;
+            while(!LoggedInUser.credentialsValidated){}
+            if (LoggedInUser.credentialsValid){
+                alert.Success(loginMessageLabel, "login successful.");
+                return;
             }
 
         } catch (Exception e) {
@@ -210,8 +200,9 @@ public class LoginController {
             usernameTextField.clear();
             passwordTextField.clear();
         }
-        credentialsValidated = false;
-        return UserExists;
+        LoggedInUser.credentialsValidated = false;
+        alert.Alert(loginMessageLabel, "Invalid credentials, please try again.");
+
     }
 
     private boolean usernameExists(String username){

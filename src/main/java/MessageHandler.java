@@ -30,11 +30,11 @@ public class MessageHandler {
         ConnectionID.ID = messageContent;
     }
     private void handleInvalidCredentials(){
-        LoginController.credentialsValidated = true;
-        LoginController.credentialsValid = false;
+        LoggedInUser.credentialsValidated = true;
+        LoggedInUser.credentialsValid = false;
     }
     private void handleValidCredentials(){
-        LoginController.credentialsValidated = true;
-        LoginController.credentialsValid = true;
+        LoggedInUser.credentialsValidated = true;
+        LoggedInUser.credentialsValid = true;
     }
 }
