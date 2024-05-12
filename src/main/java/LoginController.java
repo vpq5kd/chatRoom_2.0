@@ -15,6 +15,7 @@ public class LoginController {
 
     private static Session session;
     private Socket conn;
+    private boolean connected = false;
 
     @FXML
     private Button connectButton;
@@ -64,7 +65,9 @@ public class LoginController {
         try {
             conn = connectionHandler.connect(ipAddress, Integer.parseInt(portStr));
             Listener listener = new Listener(conn);
-            listener.listen();
+            Thread thread = new Thread(listener::listen);
+            thread.start();
+            connected = true;
             connectionMessageLabel.setStyle("-fx-text-fill: green");
             connectionMessageLabel.setText("Connection successful!");
         }catch (Exception e){
@@ -90,6 +93,10 @@ public class LoginController {
         String username = usernameTextField.getText();
         String password = passwordTextField.getText();
 
+        if (!connected){
+            loginMessageLabel
+        }
+
         if (username.isEmpty() || password.isEmpty()) {
             loginMessageLabel.setText("Please enter a username and password.");
             loginMessageLabel.setStyle("-fx-text-fill: red;");
@@ -97,7 +104,6 @@ public class LoginController {
             passwordTextField.clear();
             return;
         }
-        /** placeholder until we add a new page and such **/
         if (userExists(username, password)) {
 
             LoggedInUser.username = username;
