@@ -40,8 +40,8 @@ class credentials_handler:
         conn = sqlite3.connect(self.db_file)
         cursor = conn.cursor()
 
-        #add user
-        cursor.execute("INSERT INTO credentials (username, password) VALUES (?,?)", (username,password))
+        #add user if not exists
+        cursor.execute("INSERT OR IGNORE INTO credentials (username, password) VALUES (?,?)", (username,password))
 
         #commit
         conn.commit()
