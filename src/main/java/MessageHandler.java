@@ -12,9 +12,17 @@ public class MessageHandler {
                 handleServerRetrieval();
                 break;
             case "invalid-credentials":
+                synchronized (LoggedInUser.class){
+                    LoggedInUser.credentialsValidated = false;
+                }
+
                 handleInvalidCredentials();
                 break;
             case "valid-credentials":
+                synchronized (LoggedInUser.class){
+                    LoggedInUser.credentialsValidated = false;
+                }
+
                 handleValidCredentials();
                 break;
         }
@@ -30,11 +38,16 @@ public class MessageHandler {
         ConnectionID.ID = messageContent;
     }
     private void handleInvalidCredentials(){
-        LoggedInUser.credentialsValidated = true;
-        LoggedInUser.credentialsValid = false;
+        synchronized (LoggedInUser.class){
+            LoggedInUser.credentialsValidated = true;
+            LoggedInUser.credentialsValid = false;
+        }
+
     }
     private void handleValidCredentials(){
-        LoggedInUser.credentialsValidated = true;
-        LoggedInUser.credentialsValid = true;
+        synchronized (LoggedInUser.class){
+            LoggedInUser.credentialsValidated = true;
+            LoggedInUser.credentialsValid = true;
+        }
     }
 }

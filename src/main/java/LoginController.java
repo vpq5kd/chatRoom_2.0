@@ -17,8 +17,7 @@ public class LoginController {
     private Socket conn;
     private Alert alert = new Alert();
     private boolean connected = false;
-    public static boolean credentialsValidated = false;
-    public static boolean credentialsValid = false;
+    private final Object lock = new Object();
 
     @FXML
     private Button connectButton;
@@ -186,12 +185,23 @@ public class LoginController {
 
     private void userExists(String username, String password){
         try {
+
             String message = "s-chat***"+ConnectionID.ID+"***"+"client-name"+"***"+username+","+password+"***//\n";
             Listener.connection.send(message);
-            while(!LoggedInUser.credentialsValidated){}
+
+            while(!LoggedInUser.credentialsValidated){
+                loginMessageLabel.setText("authenticating...");
+                loginMessageLabel.setStyle("-fx-text-fill: green");
+            }
+
             if (LoggedInUser.credentialsValid){
-                alert.Success(loginMessageLabel, "login successful.");
-                return;
+                loginMessageLabel.setText("login successful.");
+                loginMessageLabel.setStyle("-fx-text-fill: green;");
+            } else if (!LoggedInUser.credentialsValid) {
+                loginMessageLabel.setText("login failed");
+                loginMessageLabel.setStyle("-fx-text-fill: red");
+                usernameTextField.clear();
+                passwordTextField.clear();
             }
 
         } catch (Exception e) {
@@ -200,9 +210,6 @@ public class LoginController {
             usernameTextField.clear();
             passwordTextField.clear();
         }
-        LoggedInUser.credentialsValidated = false;
-        alert.Alert(loginMessageLabel, "Invalid credentials, please try again.");
-
     }
 
     private boolean usernameExists(String username){
