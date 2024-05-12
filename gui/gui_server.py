@@ -67,7 +67,8 @@ def route_message(packet):
         #print(name)
         username = content[0]
         password = content[1]
-        ch.authenticate("admin","password")
+
+        ch.add_user("admin","password") #testing purposes
         authenticated = ch.authenticate(username,password)
         print(authenticated)
         chat_member = get_member_by_id(sender_id)

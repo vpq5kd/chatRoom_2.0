@@ -33,7 +33,7 @@ class credentials_handler:
 
         #authenticate password
         if row:
-            if password == row:
+            if password == row[0]:
                 return True
         return False
     def add_user(self,username,password):
