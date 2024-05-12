@@ -4,7 +4,11 @@ public class MessageHandler {
     private String messageContent;
     public void handleMessage(String message){
         splitMessage(message);
+        switch(messageType){
+            case "server-retrieval":
+                handleServerRetrieval();
 
+        }
     }
 
     private void splitMessage(String message) {
@@ -12,5 +16,8 @@ public class MessageHandler {
         serverID = Integer.parseInt(parts[1]);
         messageType = parts[2];
         messageContent = parts[3];
+    }
+    private void handleServerRetrieval(){
+
     }
 }
