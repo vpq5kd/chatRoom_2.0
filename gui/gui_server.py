@@ -3,6 +3,7 @@ import socket
 import threading
 import os
 from packet_creator import packet_creator
+from gui_database_handler import credentials_handler
 
 #global variables
 SERVER_ADDRESS = '127.0.0.1'
@@ -13,6 +14,7 @@ chat_members = []
 SERVER_ID = 0
 
 pc = packet_creator()
+credentials_handler = credentials_handler()
 
 
 #classes:
@@ -65,9 +67,10 @@ def route_message(packet):
         #print(name)
         username = content[0]
         password = content[1]
-
+        authenticated = credentials_handler.authenticate(username,password)
+        print(authenticated)
         chat_member = get_member_by_id(sender_id)
-        chat_member.set_name(name)
+        chat_member.set_name(username)
         print(chat_member.name)
 
     #handles the client request for
