@@ -3,6 +3,7 @@ import java.net.Socket;
 
 public class Listener {
     Connection connection;
+    MessageHandler messageHandler = new MessageHandler();
     public Listener(Socket conn) throws IOException {
          connection = new Connection(conn);
     }
@@ -23,5 +24,6 @@ public class Listener {
     }
     private void handleMessage(String message){
         System.out.println(message);
+        messageHandler.handleMessage(message);
     }
 }
