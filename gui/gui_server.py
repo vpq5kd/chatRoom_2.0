@@ -63,6 +63,7 @@ def route_message(packet):
 
     #handles the client name after the server hello
     if packet_type == "client-name":
+        chat_member = get_member_by_id(sender_id)
         content = split_packet[3].split(",")
         #print(name)
         username = content[0]
@@ -70,10 +71,13 @@ def route_message(packet):
 
         ch.add_user("admin","password") #testing purposes
         authenticated = ch.authenticate(username,password)
-        print(authenticated)
-        chat_member = get_member_by_id(sender_id)
-        chat_member.set_name(username)
-        print(chat_member.name)
+        if not authenticated:
+            message = f"s-chat***{SERVER_ID}***invalid-credentials***//\n".encode('utf-8')
+            chat_member.conn.send(message)
+        else:
+            message = f"s-chat***{SERVER_ID}***valid-credentials***//\n".encode('utf-8')
+            chat_member.conn.send(message)
+            chat_member.name = username
 
     #handles the client request for
     elif packet_type == "request-users":

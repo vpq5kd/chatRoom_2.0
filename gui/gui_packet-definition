@@ -6,6 +6,14 @@ s-chat***<server_ID>***server-retrieval***<new_id>***//
 client -> server | name/username send:
 s-chat***<client_ID>***client-name***<name,password>***//
 
+server -> client | invalid credentials:
+s-chat***<server_ID>***invalid-credentials***//
+
+server -> client | valid credentials:
+s-chat***<server_ID>***valid-credentials***//
+
+
+-------------------------------------------------------
 client -> server | request active users:
 s-chat***<client_ID>***request-users***//
 
