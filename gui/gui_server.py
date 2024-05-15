@@ -62,7 +62,7 @@ def route_message(packet):
     packet_type = split_packet[2]
     sender_id = split_packet[1]
 
-    #handles the client name after the server hello
+    #handles a login attempt from the client
     if packet_type == "client-name":
         chat_member = get_member_by_id(sender_id)
         content = split_packet[3].split(",")
@@ -80,6 +80,7 @@ def route_message(packet):
             chat_member.conn.send(message)
             chat_member.name = username
 
+    #handles a sign up attempt from the client
     elif packet_type == "add-user":
         chat_member = get_member_by_id(sender_id)
         content = split_packet[3].split(",")
@@ -96,7 +97,7 @@ def route_message(packet):
             message = f"s-chat***{SERVER_ID}***add-user-fail***//\n".encode('utf-8')
             chat_member.conn.send(message)
 
-    #handles the client request for
+    #handles the client request for users
     elif packet_type == "request-users":
         chat_member = get_member_by_id(sender_id)
         users = get_members()

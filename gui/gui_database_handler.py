@@ -5,11 +5,13 @@ import pytz
 
 #classes
 
-"""class that defines a client message cache, stores the local client messages."""
+db_file = 'C:\\Users\\Smspaner\\PycharmProjects\\chatRoom_2.0\\server_databases\\server_database.db'
+
+"""class that defines a table for the credentials"""
 class credentials_handler:
     """initializes the table"""
     def __init__(self):
-        self.db_file = 'C:\\Users\\Smspaner\\PycharmProjects\\chatRoom_2.0\\server_databases\\server_database.db'
+        self.db_file = db_file
         #estabish connection
         conn = sqlite3.connect(self.db_file)
         cursor = conn.cursor()
@@ -50,13 +52,34 @@ class credentials_handler:
             cursor.execute("INSERT INTO credentials (username, password) VALUES (?,?)", (username,password))
             conn.commit()
             return True
+"""class that persists messages and has appropriate functions"""
+class message_handler():
+    def __init__(self):
+        self.db_file = db_file
+        # estabish connection
+        conn = sqlite3.connect(self.db_file)
+        cursor = conn.cursor()
 
-def deleteRecords():
+        # create a new table for the user, holds if name is the same (username functionality)
+        cursor.execute(f'''CREATE TABLE IF NOT EXISTS messages(
+                                        id INTEGER PRIMARY KEY,
+                                        senderUsername TEXT NOT NULL,
+                                        recipientUsername TEXT NOT NULL,
+                                        messageType TEXT NOT NULL,
+                                        message TEXT NOT NULL,
+                                        time BIGINT NOT NULL)''')
+
+        # commit and close
+        conn.commit()
+        conn.close()
+
+
+def deleteRecords(table):
     ch = credentials_handler()
     conn = sqlite3.connect(ch.db_file)
     cursor = conn.cursor()
 
-    cursor.execute("DELETE FROM credentials")
+    cursor.execute(f"DELETE FROM {table}")
 
     conn.commit()
 
