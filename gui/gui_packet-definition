@@ -12,6 +12,15 @@ s-chat***<server_ID>***invalid-credentials***//
 server -> client | valid credentials:
 s-chat***<server_ID>***valid-credentials***//
 
+client -> server | add user request:
+s-chat***<client_ID>***add-user***<username,password>***//
+
+server -> client | add user success:
+s-chat***<client_ID>***add-user-success***//
+
+server -> client | add user fail:
+s-chat***<client_ID>***add-user-fail***//
+
 
 -------------------------------------------------------
 client -> server | request active users:

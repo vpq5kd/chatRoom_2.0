@@ -79,6 +79,22 @@ def route_message(packet):
             chat_member.conn.send(message)
             chat_member.name = username
 
+    elif packet_type == "add-user":
+        chat_member = get_member_by_id(sender_id)
+        content = split_packet[3].split(",")
+
+        username = content[0]
+        password = content[1]
+
+        userAdded = ch.add_user(username,password)
+
+        if userAdded:
+            message = f"s-chat***{SERVER_ID}***add-user-success***//".encode('utf-8')
+            chat_member.conn.send(message)
+        elif not userAdded:
+            message = f"s-chat***{SERVER_ID}***add-user-fail***//".encode('utf-8')
+            chat_member.conn.send(message)
+
     #handles the client request for
     elif packet_type == "request-users":
         chat_member = get_member_by_id(sender_id)

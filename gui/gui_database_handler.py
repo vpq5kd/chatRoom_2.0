@@ -42,9 +42,13 @@ class credentials_handler:
 
         cursor.execute("SELECT username FROM credentials where username=? ",(username,))
         user = cursor.fetchone()
+
+        if user:
+            return False;
         #add user if not exists
-        if not user:
+        elif not user:
             cursor.execute("INSERT INTO credentials (username, password) VALUES (?,?)", (username,password))
+            return True;
 
         #commit
         conn.commit()
