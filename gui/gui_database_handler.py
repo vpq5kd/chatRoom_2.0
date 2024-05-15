@@ -40,11 +40,25 @@ class credentials_handler:
         conn = sqlite3.connect(self.db_file)
         cursor = conn.cursor()
 
+        cursor.execute("SELECT username FROM credentials where username=? ",(username,))
+        user = cursor.fetchone()
         #add user if not exists
-        cursor.execute("INSERT OR IGNORE INTO credentials (username, password) VALUES (?,?)", (username,password))
+        if not user:
+            cursor.execute("INSERT INTO credentials (username, password) VALUES (?,?)", (username,password))
 
         #commit
         conn.commit()
+
+def deleteRecords():
+    ch = credentials_handler()
+    conn = sqlite3.connect(ch.db_file)
+    cursor = conn.cursor()
+
+    cursor.execute("DELETE FROM credentials")
+
+    conn.commit()
+
+deleteRecords()
 
 
 

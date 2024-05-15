@@ -5,8 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2041b14a-8a7f-45e7-beb2-4803f882f10d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/gui/gui_packet-definition" beforeDir="false" afterPath="$PROJECT_DIR$/gui/gui_packet-definition" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gui/gui_server.py" beforeDir="false" afterPath="$PROJECT_DIR$/gui/gui_server.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server_databases/server_database.db" beforeDir="false" afterPath="$PROJECT_DIR$/server_databases/server_database.db" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,7 +39,7 @@
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Smspaner/PycharmProjects/chatRoom_2.0&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Smspaner/Downloads/SimpleSqliteBrowser-1.0.7.zip&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
   }
 }</component>
