@@ -52,6 +52,7 @@ def print_information():
 def receive_message(conn):
     while True:
         packet = conn.recv(4096).decode('utf-8')
+        print(packet)
         threading.Thread(target=route_message, args=(packet,)).start()
 
 """routes the message depending on the packet"""
@@ -69,7 +70,7 @@ def route_message(packet):
         username = content[0]
         password = content[1]
 
-        ch.add_user("admin","password") #testing purposes
+        # ch.add_user("admin","password") #testing purposes
         authenticated = ch.authenticate(username,password)
         if not authenticated:
             message = f"s-chat***{SERVER_ID}***invalid-credentials***//\n".encode('utf-8')
@@ -89,10 +90,10 @@ def route_message(packet):
         userAdded = ch.add_user(username,password)
 
         if userAdded:
-            message = f"s-chat***{SERVER_ID}***add-user-success***//".encode('utf-8')
+            message = f"s-chat***{SERVER_ID}***add-user-success***//\n".encode('utf-8')
             chat_member.conn.send(message)
         elif not userAdded:
-            message = f"s-chat***{SERVER_ID}***add-user-fail***//".encode('utf-8')
+            message = f"s-chat***{SERVER_ID}***add-user-fail***//\n".encode('utf-8')
             chat_member.conn.send(message)
 
     #handles the client request for

@@ -44,14 +44,12 @@ class credentials_handler:
         user = cursor.fetchone()
 
         if user:
-            return False;
+            return False
         #add user if not exists
         elif not user:
             cursor.execute("INSERT INTO credentials (username, password) VALUES (?,?)", (username,password))
-            return True;
-
-        #commit
-        conn.commit()
+            conn.commit()
+            return True
 
 def deleteRecords():
     ch = credentials_handler()
@@ -61,8 +59,6 @@ def deleteRecords():
     cursor.execute("DELETE FROM credentials")
 
     conn.commit()
-
-deleteRecords()
 
 
 
