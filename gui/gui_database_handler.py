@@ -53,7 +53,7 @@ class credentials_handler:
             conn.commit()
             return True
 """class that persists messages and has appropriate functions"""
-class message_handler():
+class chat_message_handler():
     def __init__(self):
         self.db_file = db_file
         # estabish connection
